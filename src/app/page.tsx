@@ -5,6 +5,7 @@ import Portfolio from '@/components/Portfolio';
 import ContactForm from '@/components/ContactForm';
 import AnimatedSection from '@/components/AnimatedSection';
 import TrustedBy from '@/components/TrustedBy';
+import About from '@/components/About';
 
 export default function Home() {
   return (
@@ -13,6 +14,9 @@ export default function Home() {
       <TrustedBy />
       <AnimatedSection>
         <ServicesOverview />
+      </AnimatedSection>
+      <AnimatedSection>
+        <About />
       </AnimatedSection>
       <AnimatedSection>
         <Portfolio />
