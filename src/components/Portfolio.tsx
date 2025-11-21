@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import React, { useLayoutEffect, useRef, useState } from "react";
+import React from "react";
 import Image from "next/image";
 
 const projects = [
@@ -42,122 +42,90 @@ const projects = [
   },
 ];
 
-const AnimatedPortfolio = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const scrollerRef = useRef<HTMLDivElement>(null);
-  const initializedRef = useRef(false);
-  const [start, setStart] = useState(false);
-
-  useLayoutEffect(() => {
-    if (scrollerRef.current && !initializedRef.current) {
-      // Duplicate content for infinite scroll
-      const children = Array.from(scrollerRef.current.children);
-      children.forEach((child) => {
-        const clone = child.cloneNode(true);
-        scrollerRef.current?.appendChild(clone);
-      });
-      initializedRef.current = true;
-      queueMicrotask(() => setStart(true));
-    }
-  }, []);
-
+const Portfolio = () => {
   return (
-    <section className="py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center">
-          <h2 className="text-3xl font-extrabold text-gray-900">Our Work</h2>
-          <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-500">
-            Here&apos;s a glimpse of the solutions we&apos;ve delivered.
+    <section className="section-spacing bg-white">
+      <div className="max-w-7xl mx-auto container-padding">
+        {/* Header */}
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <span className="inline-block text-sm font-semibold tracking-wider text-primary uppercase mb-3">
+            Our Work
+          </span>
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 leading-tight mb-6">
+            Success Stories
+          </h2>
+          <p className="text-lg text-neutral-600 leading-relaxed">
+            Here's a glimpse of the solutions we've delivered and the results we've achieved.
           </p>
         </div>
 
-        <div
-          ref={containerRef}
-          className="relative mt-12 overflow-hidden"
-          style={{
-            maskImage:
-              "linear-gradient(to right, transparent, white 10%, white 90%, transparent)",
-            WebkitMaskImage:
-              "linear-gradient(to right, transparent, white 10%, white 90%, transparent)",
-          }}
-        >
-          <div
-            ref={scrollerRef}
-            className={`flex gap-8 py-4 animate-scroll ${start ? "animate-scroll" : ""
-              }`}
-            style={{
-              animation: start
-                ? "scroll 30s linear infinite"
-                : "none",
-            }}
-          >
-            {projects.map((project) => (
-              <div
-                key={project.title}
-                className="flex-shrink-0 w-[300px] md:w-[400px] rounded-2xl shadow-lg overflow-hidden bg-white border border-gray-200"
-              >
-                <div className="relative h-48 w-full">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="p-6 flex flex-col gap-3">
-                  <span className="text-sm text-gray-500 font-semibold">
+        {/* Projects Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {projects.map((project, index) => (
+            <div
+              key={project.title}
+              className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-neutral-100"
+              style={{
+                animation: `fadeInUp 0.6s ease-out ${index * 0.1}s forwards`,
+                opacity: 0,
+                animationFillMode: 'forwards'
+              }}
+            >
+              {/* Image */}
+              <div className="relative h-56 w-full overflow-hidden bg-neutral-100">
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              </div>
+
+              {/* Content */}
+              <div className="p-6 space-y-4">
+                <div>
+                  <span className="text-xs font-semibold text-primary uppercase tracking-wider">
                     {project.category}
                   </span>
-                  <h3 className="text-lg font-bold text-gray-900">
+                  <h3 className="text-xl font-bold text-neutral-900 mt-2 group-hover:text-primary transition-colors duration-300">
                     {project.title}
                   </h3>
-                  <p className="text-sm text-gray-600">
-                    <strong className="font-semibold text-gray-800">
-                      Problem:
-                    </strong>{" "}
+                </div>
+
+                <div className="space-y-3 text-sm">
+                  <p className="text-neutral-600">
+                    <strong className="font-semibold text-neutral-800">Problem:</strong>{" "}
                     {project.problem}
                   </p>
-                  <p className="text-sm text-gray-600">
-                    <strong className="font-semibold text-gray-800">
-                      Solution:
-                    </strong>{" "}
+                  <p className="text-neutral-600">
+                    <strong className="font-semibold text-neutral-800">Solution:</strong>{" "}
                     {project.solution}
                   </p>
-                  <p className="text-sm text-green-600">
-                    <strong className="font-semibold text-green-700">
-                      Result:
-                    </strong>{" "}
+                  <p className="text-green-700">
+                    <strong className="font-semibold text-green-800">Result:</strong>{" "}
                     {project.result}
                   </p>
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    {project.tech.map((tag) => (
-                      <span
-                        key={tag}
-                        className="inline-block bg-gray-200 text-gray-800 text-xs px-2 py-1 rounded-full"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
+                </div>
+
+                {/* Tech Stack */}
+                <div className="flex flex-wrap gap-2 pt-2">
+                  {project.tech.map((tag) => (
+                    <span
+                      key={tag}
+                      className="inline-block bg-neutral-100 text-neutral-700 text-xs font-medium px-3 py-1 rounded-full"
+                    >
+                      {tag}
+                    </span>
+                  ))}
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes scroll {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(-50%);
-          }
-        }
-      `}</style>
     </section>
   );
 };
 
-export default AnimatedPortfolio;
+export default Portfolio;
