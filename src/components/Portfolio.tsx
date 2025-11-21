@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 const projects = [
@@ -45,17 +45,19 @@ const projects = [
 const AnimatedPortfolio = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollerRef = useRef<HTMLDivElement>(null);
+  const initializedRef = useRef(false);
   const [start, setStart] = useState(false);
 
-  useEffect(() => {
-    if (scrollerRef.current) {
+  useLayoutEffect(() => {
+    if (scrollerRef.current && !initializedRef.current) {
       // Duplicate content for infinite scroll
       const children = Array.from(scrollerRef.current.children);
       children.forEach((child) => {
         const clone = child.cloneNode(true);
         scrollerRef.current?.appendChild(clone);
       });
-      setStart(true);
+      initializedRef.current = true;
+      queueMicrotask(() => setStart(true));
     }
   }, []);
 
@@ -65,7 +67,7 @@ const AnimatedPortfolio = () => {
         <div className="text-center">
           <h2 className="text-3xl font-extrabold text-gray-900">Our Work</h2>
           <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-500">
-            Here's a glimpse of the solutions we've delivered.
+            Here&apos;s a glimpse of the solutions we&apos;ve delivered.
           </p>
         </div>
 
@@ -81,9 +83,8 @@ const AnimatedPortfolio = () => {
         >
           <div
             ref={scrollerRef}
-            className={`flex gap-8 py-4 animate-scroll ${
-              start ? "animate-scroll" : ""
-            }`}
+            className={`flex gap-8 py-4 animate-scroll ${start ? "animate-scroll" : ""
+              }`}
             style={{
               animation: start
                 ? "scroll 30s linear infinite"

@@ -35,7 +35,7 @@ const ContactForm = () => {
       } else {
         setStatus({ message: result.message || 'An error occurred.', type: 'error' });
       }
-    } catch (error) {
+    } catch {
       setStatus({ message: 'An error occurred while sending the message.', type: 'error' });
     }
   };
@@ -44,7 +44,7 @@ const ContactForm = () => {
     <section className="py-24 bg-secondary" id="contact">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <h2 className="text-3xl font-extrabold text-gray-900">Let's Discuss Your Project.</h2>
+          <h2 className="text-3xl font-extrabold text-gray-900">Let&apos;s Discuss Your Project.</h2>
           <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-500">
             Ready to build something great? Reach out to our team. We are committed to responding within one business day.
           </p>

@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 const About = () => {
   return (
@@ -6,10 +7,12 @@ const About = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
         {/* Image Section */}
         <div>
-          <img
+          <Image
             src="/images/2456073.jpg" // ensure the image is in /public/images/
             alt="Team working together"
             className="rounded-2xl shadow-lg w-full"
+            width={800}
+            height={600}
           />
         </div>
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import React, { useEffect, useState } from "react";
+import React, { useLayoutEffect, useState, useCallback } from "react";
 
 export const InfiniteMovingCards = ({
   items,
@@ -23,15 +23,28 @@ export const InfiniteMovingCards = ({
 }) => {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const scrollerRef = React.useRef<HTMLUListElement>(null);
+  const initializedRef = React.useRef(false);
 
   const [start, setStart] = useState(false);
 
-  useEffect(() => {
-    addAnimation();
-  }, []);
+  const setDirection = useCallback(() => {
+    if (containerRef.current) {
+      containerRef.current.style.setProperty(
+        "--animation-direction",
+        direction === "left" ? "forwards" : "reverse"
+      );
+    }
+  }, [direction]);
 
-  function addAnimation() {
-    if (containerRef.current && scrollerRef.current) {
+  const setSpeed = useCallback(() => {
+    if (containerRef.current) {
+      const duration = speed === "fast" ? "20s" : speed === "normal" ? "40s" : "80s";
+      containerRef.current.style.setProperty("--animation-duration", duration);
+    }
+  }, [speed]);
+
+  const addAnimation = useCallback(() => {
+    if (containerRef.current && scrollerRef.current && !initializedRef.current) {
       const scrollerContent = Array.from(scrollerRef.current.children);
 
       scrollerContent.forEach((item) => {
@@ -41,25 +54,14 @@ export const InfiniteMovingCards = ({
 
       setDirection();
       setSpeed();
-      setStart(true);
+      initializedRef.current = true;
+      queueMicrotask(() => setStart(true));
     }
-  }
+  }, [setDirection, setSpeed]);
 
-  const setDirection = () => {
-    if (containerRef.current) {
-      containerRef.current.style.setProperty(
-        "--animation-direction",
-        direction === "left" ? "forwards" : "reverse"
-      );
-    }
-  };
-
-  const setSpeed = () => {
-    if (containerRef.current) {
-      const duration = speed === "fast" ? "20s" : speed === "normal" ? "40s" : "80s";
-      containerRef.current.style.setProperty("--animation-duration", duration);
-    }
-  };
+  useLayoutEffect(() => {
+    addAnimation();
+  }, [addAnimation]);
 
   return (
     <div

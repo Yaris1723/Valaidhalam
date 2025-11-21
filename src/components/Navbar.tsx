@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
-import Link from "next/link";
+import React from "react";
 import { FloatingNav } from "@/components/ui/floating-navbar";
 
 import { Home, Briefcase, Folder, Phone } from "lucide-react";
