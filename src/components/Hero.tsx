@@ -23,7 +23,7 @@ const Hero = () => {
     },
     {
       title: "Contact",
-      description: "Get in touch with our expert team",
+      description: "Connect with our team for inquiries and support",
       icon: Mail,
       link: "/contact",
       color: "from-green-500 to-emerald-500"
@@ -41,17 +41,6 @@ const Hero = () => {
 
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 lg:px-12">
-        {/* Badge */}
-        <div
-          className="flex justify-center mb-8 opacity-0 animate-[fadeInUp_0.8s_ease-out_0.1s_forwards]"
-          style={{ animationFillMode: 'forwards' }}
-        >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary">
-            <Sparkles className="w-4 h-4" />
-            <span className="text-sm font-semibold">Modern Digital Solutions</span>
-          </div>
-        </div>
-
         {/* Main Heading */}
         <h1
           className="text-center text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-neutral-900 leading-tight opacity-0 animate-[fadeInUp_0.8s_ease-out_0.2s_forwards]"
