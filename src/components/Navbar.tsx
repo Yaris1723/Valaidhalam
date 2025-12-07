@@ -33,7 +33,7 @@ const Navbar = () => {
     <>
       {/* Floating Navbar */}
       <nav
-        className={`fixed md:left-1/2 md:-translate-x-1/2 left-4 z-50 transition-all duration-500 ease-out ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
+        className={`fixed md:left-1/2 md:-translate-x-1/2 right-4 left-auto z-50 transition-all duration-500 ease-out ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
           } ${scrolled ? 'top-2 scale-[0.98]' : 'top-4 scale-100'}`}
         style={{
           animation: mounted ? 'fadeInDown 0.6s ease-out' : 'none'
@@ -81,8 +81,7 @@ const Navbar = () => {
           </div>
 
           {/* Mobile Menu Button */}
-          {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center justify-start w-full">
+          <div className="md:hidden flex items-center justify-end w-full">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 rounded-full text-neutral-700 hover:bg-white/50 transition-all duration-300 hover:scale-110"
